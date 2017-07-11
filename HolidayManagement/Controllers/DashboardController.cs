@@ -1,4 +1,7 @@
-﻿using System;
+﻿using HolidayManagement.Models;
+using HolidayManagement.Repository;
+using HolidayManagement.Repository.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -9,26 +12,18 @@ namespace HolidayManagement.Controllers
     [Authorize]
     public class DashboardController : Controller
     {
+        public HolidayManagementContext db = new HolidayManagementContext();
+
         // GET: Dashboard
         public ActionResult Index()
         {
-            return View();
+          
+            var DbUsers = db.UsersDetails.ToList();  
+            DashboardViewModels dashboardVM = new DashboardViewModels();
+            dashboardVM.UserList=DbUsers;
+            
+            return View(dashboardVM);
         }
-        public PartialViewResult Users()
-        {
-            return PartialView("_Users");
-        }
-        public PartialViewResult GroupManagment()
-        {
-            return PartialView("_GroupManagment");
-        }
-        public PartialViewResult MyCalendar()
-        {
-            return PartialView("_MyCalendar");
-        }
-        public PartialViewResult Settings()
-        {
-            return PartialView("_Settings");
-        }
+       
     }
 }

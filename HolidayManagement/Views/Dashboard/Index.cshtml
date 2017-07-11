@@ -1,22 +1,15 @@
-﻿
+﻿@model HolidayManagement.Models.DashboardViewModels
+@* Varja a modelt *@
 @{
     ViewBag.Title = "Dashboard Index";
 }
-<!--
-<h2>Dashboard Index</h2>
-<div id="tabs">
-    <ul class="nav nav-tabs">
-        <li class="active"><a href="#">Home</a></li>
-        <li>@Html.ActionLink("Users", "Users", "Dashboard")</li>
-        <li>@Html.ActionLink("Group Managment", "GroupManagment", "Dashboard")</li>
-        <li>@Html.ActionLink("My Calendar", "MyCalendar", "Dashboard")</li>
-        <li>@Html.ActionLink("Settings", "Settings", "Dashboard")</li>
-    </ul>
-</div>
--->
+<script type="text/javascript">
+      InitializeDashboardModel(@Html.Raw(Json.Encode(Model)));
+</script>
 
+@*Task4*@
 <div class="container">
-    <h2>Dynamic Tabs</h2>
+
     <ul class="nav nav-tabs">
         <li class="active"><a data-toggle="tab" href="#home">Home</a></li>
         <li><a data-toggle="tab" href="#menu1">Users</a></li>
@@ -24,23 +17,24 @@
         <li><a data-toggle="tab" href="#menu3">My Calendar</a></li>
         <li><a data-toggle="tab" href="#menu4">Settings</a></li>
     </ul>
-
+    @*  Views-> Dashboard->  Partial view-at kell letrehozni, template: Empty *@
     <div class="tab-content">
         <div id="home" class="tab-pane fade in active">
            <h2>Welcome </h2>
          </div>
         <div id="menu1" class="tab-pane fade">
-          @Html.Action("Users", "Dashboard")
+          @Html.Partial("_Users")
         </div>
         <div id="menu2" class="tab-pane fade">
-            @Html.Action("GroupManagment", "Dashboard")    
+            @Html.Partial("_GroupManagment")    
          </div>
         <div id="menu3" class="tab-pane fade">
-            @Html.Action("MyCalendar", "Dashboard")
+            @Html.Partial("_MyCalendar")
          </div>
         <div id="menu4" class="tab-pane fade">
-            @Html.Action("Settings", "Dashboard")
+            @Html.Partial("_Settings")
         </div>
     </div>
 </div>
+
 

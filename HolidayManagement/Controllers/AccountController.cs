@@ -172,7 +172,8 @@ namespace HolidayManagement.Controllers
                          };
                     db.UsersDetails.Add(nuser);
                     db.SaveChanges();
-                    
+
+                    //Regisztracio utan atiranyitas,Login-t 464.sorban
                     return RedirectToAction("Index", "Dashboard");
                 }
                 AddErrors(result);
@@ -459,7 +460,7 @@ namespace HolidayManagement.Controllers
             {
                 return Redirect(returnUrl);
             }
-            //Login--> Dashboard itt kell atirni
+            //Login utan atiranyitas
             return RedirectToAction("Index", "Dashboard");
         }
 
