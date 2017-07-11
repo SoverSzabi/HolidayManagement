@@ -64,6 +64,16 @@ namespace HolidayManagement.Models
 
     public class RegisterViewModel
     {
+
+        [Required]
+     
+        [Display(Name = "First Name")]
+        public string FirstName { get; set; }
+    
+        [Required]
+        [Display(Name = "LastName ")]
+        public string LastName { get; set; }
+
         [Required]
         [EmailAddress]
         [Display(Name = "Email")]

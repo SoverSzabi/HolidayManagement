@@ -8,12 +8,12 @@ namespace HolidayManagement.Repository
     {
         public UserDetails GetUserDetailsById(int userDetailsId)
         {
-            return DbContext.Users.FirstOrDefault(x => x.ID == userDetailsId);
+            return DbContext.UsersDetails.FirstOrDefault(x => x.ID == userDetailsId);
         }
 
         public List<UserDetails> GetUsers()
         {
-            return DbContext.Users.ToList();
+            return DbContext.UsersDetails.ToList();
         }
     }
 }

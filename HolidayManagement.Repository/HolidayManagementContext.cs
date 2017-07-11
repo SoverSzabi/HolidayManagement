@@ -1,17 +1,18 @@
 ﻿using HolidayManagement.Repository.Models;
+using Microsoft.AspNet.Identity.EntityFramework;
 using System.Data.Entity;
 using System.Data.Entity.ModelConfiguration.Conventions;
 
 namespace HolidayManagement.Repository
 {
-    public class HolidayManagementContext: DbContext
+    public class HolidayManagementContext: IdentityDbContext
     {
         public HolidayManagementContext() : base("name=HolidayManagementContext")
         {
             Database.SetInitializer(new HolidayManagementInitializer());
         }
 
-        public DbSet<UserDetails> Users { get; set; }
+        public DbSet<UserDetails> UsersDetails { get; set; }
         public DbSet<Team> Teams { get; set; }
         public DbSet<BankHoliday> BankHolidays { get; set; }
         public DbSet<Vacation> Vacations { get; set; }
@@ -19,6 +20,7 @@ namespace HolidayManagement.Repository
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
+            base.OnModelCreating(modelBuilder);
             modelBuilder.Conventions.Remove<PluralizingTableNameConvention>();            
         }
 

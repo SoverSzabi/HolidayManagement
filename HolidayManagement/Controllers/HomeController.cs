@@ -12,7 +12,7 @@ namespace HolidayManagement.Controllers
         {
             return View();
         }
-
-       //About and Contact 
+      
+        //About and Contact 
     }
 }
