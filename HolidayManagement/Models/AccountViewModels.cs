@@ -68,9 +68,11 @@ namespace HolidayManagement.Models
         [Required]
      
         [Display(Name = "First Name")]
+        [RegularExpression(pattern: "@ ^[a - zA - Z]")]
         public string FirstName { get; set; }
     
         [Required]
+        [RegularExpression(pattern: "@ ^[a - zA - Z]")]
         [Display(Name = "LastName ")]
         public string LastName { get; set; }
 

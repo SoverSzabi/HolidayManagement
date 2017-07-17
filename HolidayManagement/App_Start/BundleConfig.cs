@@ -27,7 +27,8 @@ namespace HolidayManagement
                       "~/Content/bootstrap.css",
                       "~/Content/site.css"));
             bundles.Add(new ScriptBundle("~/bundles/knockout").Include(
-                      "~/Scripts/knockout-3.4.2.js"));
+                      "~/Scripts/knockout-3.4.2.js",
+                      "~/Scripts/underscore.js"));
         }
     }
 }

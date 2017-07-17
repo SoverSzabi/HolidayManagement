@@ -9,9 +9,7 @@ namespace HolidayManagement.Models
 {
     public class DashboardViewModels
     {
-        
-        [Required]
-        public UserDetails LogedUser { get; set; }
+        public List<Team> TeamList { get; set; }
         public List<UserDetails> UserList { get; set; }
     }
 }

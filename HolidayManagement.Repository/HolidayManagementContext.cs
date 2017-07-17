@@ -12,7 +12,7 @@ namespace HolidayManagement.Repository
             Database.SetInitializer(new HolidayManagementInitializer());
         }
 
-        public DbSet<UserDetails> UsersDetails { get; set; }
+        public DbSet<UserDetails> UserDetailsModel { get; set; }
         public DbSet<Team> Teams { get; set; }
         public DbSet<BankHoliday> BankHolidays { get; set; }
         public DbSet<Vacation> Vacations { get; set; }

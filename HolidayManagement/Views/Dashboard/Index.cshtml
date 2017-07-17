@@ -1,11 +1,9 @@
 ﻿@model HolidayManagement.Models.DashboardViewModels
-@* Varja a modelt *@
+
 @{
     ViewBag.Title = "Dashboard Index";
 }
-<script type="text/javascript">
-      InitializeDashboardModel(@Html.Raw(Json.Encode(Model)));
-</script>
+
 
 @*Task4*@
 <div class="container">
@@ -36,5 +34,7 @@
         </div>
     </div>
 </div>
-
+<script type="text/javascript">
+      InitializeDashboardModel(@Html.Raw(Json.Encode(Model)));
+</script>
 

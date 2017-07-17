@@ -1,7 +1,4 @@
-﻿using System;
-using System.Globalization;
-using System.Linq;
-using System.Security.Claims;
+﻿using System.Linq;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
@@ -11,6 +8,11 @@ using Microsoft.Owin.Security;
 using HolidayManagement.Models;
 using HolidayManagement.Repository;
 using HolidayManagement.Repository.Models;
+using System.Web.Services.Description;
+using System;
+using static HolidayManagement.Controllers.ManageController;
+using System.Net;
+using System.Data.Entity;
 
 namespace HolidayManagement.Controllers
 {
@@ -54,6 +56,83 @@ namespace HolidayManagement.Controllers
             }
         }
 
+
+        //!CREATE USER
+        [HttpPost]
+        public async Task<ActionResult> CreateUser(UserDetails model)
+        {
+            string message="ok";
+            bool successed = true;
+            //   if (ModelState.IsValid)
+            //  {
+            var user = new ApplicationUser { UserName = model.AspnetUsers.Email, Email = model.AspnetUsers.Email };
+
+            var result = await UserManager.CreateAsync(user, "Password1!");
+            if (result.Succeeded)
+            {
+                using (HolidayManagementContext db = new HolidayManagementContext())
+                {
+                    model.AspnetUsers = null;
+                    model.UserID = user.Id;
+
+                    //   db.UserDetails.Add(model);
+                    db.UserDetailsModel.Add(model);
+                    try
+                    {
+                        db.SaveChanges();
+                    }
+                    catch (Exception e)
+                    {
+                        successed = false;
+                        message = "Save Error";
+                    }
+                }
+
+            }
+            else
+            {
+                successed = false;
+                message = result.Errors.ToArray()[0];
+            }
+
+
+            var res = new { Success = successed, EMessage = message, newUser = model };
+            return Json(res, JsonRequestBehavior.DenyGet);
+
+
+        }
+
+        //!CREATE EDIT
+
+        // POST: 
+        [HttpPost]
+        public ActionResult EditUser(UserDetails model)
+        {
+            string message = "ok";
+            bool successed = true;
+
+            using (HolidayManagementContext db = new HolidayManagementContext())
+            {
+                //Id megkeresese alapjan visszateriti a modelt
+                var user = db.UserDetailsModel.FirstOrDefault(x => x.ID == model.ID);
+                
+                user.LastName = model.LastName;
+                user.FirstName = model.FirstName;
+                user.AspnetUsers.Email = model.AspnetUsers.Email;
+                user.HireDate = model.HireDate;
+                user.MaxDays = model.MaxDays;
+                user.Team = model.Team;
+
+                db.SaveChanges();
+
+            }
+
+            UserDetailsRepository UDR = new UserDetailsRepository();
+            var res = new { Success = successed, EMessage = message,  usersList= UDR.GetUsers() };//
+            return Json(res, JsonRequestBehavior.DenyGet);
+
+
+        }
         //
         // GET: /Account/Login
         [AllowAnonymous]
@@ -170,7 +249,7 @@ namespace HolidayManagement.Controllers
                         FirstName = model.FirstName,
                         UserID = user.Id
                          };
-                    db.UsersDetails.Add(nuser);
+                    db.UserDetailsModel.Add(nuser);
                     db.SaveChanges();
 
                     //Regisztracio utan atiranyitas,Login-t 464.sorban
@@ -182,6 +261,7 @@ namespace HolidayManagement.Controllers
             // If we got this far, something failed, redisplay form
             return View(model);
         }
+       
 
         //
         // GET: /Account/ConfirmEmail

@@ -18,12 +18,17 @@ namespace HolidayManagement.Controllers
         public ActionResult Index()
         {
           
-            var DbUsers = db.UsersDetails.ToList();  
+            var DbUsers = db.UserDetailsModel.ToList();  
             DashboardViewModels dashboardVM = new DashboardViewModels();
-            dashboardVM.UserList=DbUsers;
-            
+            UserDetailsRepository UDR = new UserDetailsRepository();
+            dashboardVM.UserList= UDR.GetUsers();
+
+            TeamRepository TR = new TeamRepository();
+            dashboardVM.TeamList = TR.GetTeams();
             return View(dashboardVM);
         }
        
+
     }
+
 }
