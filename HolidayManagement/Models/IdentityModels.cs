@@ -3,6 +3,7 @@ using System.Security.Claims;
 using System.Threading.Tasks;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
+using HolidayManagement.Repository;
 
 namespace HolidayManagement.Models
 {
@@ -15,6 +16,25 @@ namespace HolidayManagement.Models
             var userIdentity = await manager.CreateIdentityAsync(this, DefaultAuthenticationTypes.ApplicationCookie);
             // Add custom user claims here
             return userIdentity;
+
+            var roleManager = new RoleManager<IdentityRole>(new RoleStore<IdentityRole>(new HolidayManagementContext()));
+
+            roleManager.Create(new IdentityRole()
+            {
+                Name = "Admin",
+               
+            });
+            roleManager.Create(new IdentityRole()
+            {
+                Name = "HR",
+
+            });
+            roleManager.Create(new IdentityRole()
+            {
+                Name = "Employee",
+
+            });
+
         }
     }
 

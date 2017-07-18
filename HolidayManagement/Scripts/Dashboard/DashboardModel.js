@@ -2,24 +2,68 @@
 
     var _self = this;
     this.users = ko.observableArray(null);
-    this.teams = [];
+    this.teams = ko.observableArray(null);
+    this.roles = ko.observableArray(null);//
+    this.bankDays = ko.observableArray(null);//
+    this.days = ko.observableArray(null);//
     this.manageUser = new UserDetailsModel();
 
     this.initialize = function (data) {
         var users = _.map(data.UserList, function (user, index) {
             return new UserDetailsModel(user);
         });
-        _self.users(users);
 
+        _self.users(users);
+      
         var teams = _.map(data.TeamList, function (team,index) {
             return new TeamModel(team);
         });
+        _self.teams(teams);
 
-        _self.teams = (teams);
+        var roles = _.map(data.RoleList, function (role,index) {
+            return new RoleModel(role);
+        });
+        _self.roles(roles);
+
+        var bankDays = _.map(data.Calendar.HolidayList, function (day) {
+            return new BankHoliday(day);
+        });
+        _self.bankDays(bankDays);
+
+
+
+        var d = new Date();
+        setWeekdaysInMonth(d.getMonth(), d.getYear());
+      
     };
+
+    var daysInMonth = function (month, year) {//daysInMonth(year,month);
+        return new Date(year, month, 0).getDate();
+    }
+
+    var isWeekday = function (year, month, day) {
+        var day = new Date(year, month, day).getDay();
+        return day != 0 && day != 6;
+    }
+
+    var setWeekdaysInMonth = function(month, year) {
+        var days = daysInMonth(month, year);
+        var weekdays = 0;
+                
+        for(var i=0; i< days+1; i++) {
+            if (isWeekday(year, month, i + 1))
+            {
+                _self.days.push(new MonthDayModel({Day:i+1, IsFeeDay:false}));
+            }
+            else {
+                _self.days.push(new MonthDayModel({Day:i+1, IsFreeDay:true}));
+            }
+                weekdays++;
+        }
+    }
+
     this.errorMessage = ko.observableArray(null);
    
-
     this.CreateUser = function () {
        
         $('#errors').html('');
@@ -30,11 +74,12 @@
                 firstName: _self.manageUser.firstName(), 
                 lastName: _self.manageUser.lastName(),
                 AspnetUsers: {
-                    email: _self.manageUser.email()
+                    email: _self.manageUser.email(),
+                    Roles: _self.manageUser.role() != null ? [{ RoleId: _self.manageUser.role().id }] : null
                 },
-            hireDate: _self.manageUser.hireDate(),
+                hireDate:_self.manageUser.hireDate(),
             maxDays: _self.manageUser.maxDays(),
-            teamId: _self.manageUser.team().id,
+            TeamId: _self.manageUser.team().id
             },
             datatype:"json",
             success: function (data) {
@@ -53,8 +98,6 @@
         });
     };
 
-
-
     this.OpenEditUser = function (user) {
         _self.manageUser.id(user.id());
         _self.manageUser.firstName(user.firstName());
@@ -68,6 +111,11 @@
         } else
             _self.manageUser.team(new TeamModel());
 
+        if (user.role() != null) {
+            _self.manageUser.role(user.role());
+        } else
+            _self.manageUser.role(new RoleModel());
+
     }
 
     this.ResetManageUser = function () {
@@ -79,10 +127,10 @@
         _self.manageUser.email(null);
 
         _self.manageUser.team(new TeamModel());
-
+        _self.manageUser.role(new RoleModel());
 
     }
-    //h edit vagy create button jelenjen meg egy if, ... mivel van tobb az edit buttonnak
+    
     this.EditUser = function () {
 
         $.ajax({
@@ -97,7 +145,8 @@
                 },
                 hireDate: _self.manageUser.hireDate(),
                 maxDays: _self.manageUser.maxDays(),
-                //teamId: _self.manageUser.team().id,
+                TeamId: _self.manageUser.team().id,
+                RoleId: _self.manageUser.role().id,
             },
             datatype: "json",
             success: function (data) {
@@ -113,8 +162,31 @@
         });
        
     };
+    //Date format
+    var setDateWithZero = function (date) {
+        if (date < 10)
+            date = "0" + date;
+
+        return date;
+    };
+
+    var dateTimeReviver = function (value) {
+        var match;
+
+        if (typeof value === 'string') {
+            match = /\/Date\((\d*)\)\//.exec(value);
+            if (match) {
+                var date = new Date(+match[1]);
+                return date.getFullYear() + "-" + setDateWithZero(date.getMonth() + 1) + "-" + setDateWithZero(date.getDate()) +
+                       "T" + setDateWithZero(date.getHours()) + ":" + setDateWithZero(date.getMinutes()) + ":" + setDateWithZero(date.getSeconds()) + "." + date.getMilliseconds();
+            }
+        }
+        return value;
+    };
+
 
 }
+
 
 function InitializeDashboardModel(data) {
     DashboardModel.instance = new DashboardModel();

@@ -6,6 +6,7 @@ function UserDetailsModel(model) {
     this.email = ko.observable(null);
     this.hireDate = ko.observable(null);
     this.maxDays = ko.observable(null);
+    this.role = ko.observable(new RoleModel());//
     this.team =  ko.observable(new TeamModel());
 
     if(model!=null)
@@ -14,6 +15,7 @@ function UserDetailsModel(model) {
         if (model.AspnetUsers!=null)
         {
             this.email(model.AspnetUsers.Email);
+            this.role(new RoleModel(model.AspnetUsers.role));
         }
     
         this.firstName(model.FirstName);
@@ -21,6 +23,7 @@ function UserDetailsModel(model) {
         this.hireDate(model.HireDate);
         this.maxDays(model.MaxDays);
         this.team(new TeamModel(model.Team));
+       
         
     }
 }

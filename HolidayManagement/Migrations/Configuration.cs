@@ -1,5 +1,8 @@
 namespace HolidayManagement.Migrations
 {
+    using Microsoft.AspNet.Identity;
+    using Microsoft.AspNet.Identity.EntityFramework;
+    using Repository;
     using Repository.Models;
     using System;
     using System.Collections.Generic;
@@ -58,6 +61,24 @@ namespace HolidayManagement.Migrations
 
             vacationStates.ForEach(vs => context.VacationStates.Add(vs));
             context.SaveChanges();
+
+            var roleManager = new RoleManager<IdentityRole>(new RoleStore<IdentityRole>(new HolidayManagementContext()));
+
+            roleManager.Create(new IdentityRole()
+            {
+                Name = "Admin"
+            });
+
+            roleManager.Create(new IdentityRole()
+            {
+                Name = "HR"
+            });
+            roleManager.Create(new IdentityRole()
+            {
+                Name = "Employee"
+            });
+
         }
+
     }
 }

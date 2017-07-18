@@ -70,13 +70,24 @@ namespace HolidayManagement.Controllers
             var result = await UserManager.CreateAsync(user, "Password1!");
             if (result.Succeeded)
             {
-                using (HolidayManagementContext db = new HolidayManagementContext())
-                {
+                    using (HolidayManagementContext db = new HolidayManagementContext())
+                    {
+                    if (model.AspnetUsers != null && model.AspnetUsers.Roles.Count() > 0)
+                    {
+                        var roleID = model.AspnetUsers.Roles.FirstOrDefault().RoleId;
+
+                        var role = db.Roles.FirstOrDefault(x => x.Id == roleID);
+
+                        if (role != null)
+                            await UserManager.AddToRoleAsync(user.Id, role.Name);
+                    }
                     model.AspnetUsers = null;
                     model.UserID = user.Id;
-
+                  
                     //   db.UserDetails.Add(model);
                     db.UserDetailsModel.Add(model);
+
+                    
                     try
                     {
                         db.SaveChanges();
@@ -86,7 +97,9 @@ namespace HolidayManagement.Controllers
                         successed = false;
                         message = "Save Error";
                     }
+
                 }
+                
 
             }
             else
@@ -238,17 +251,16 @@ namespace HolidayManagement.Controllers
                 {
                     await SignInManager.SignInAsync(user, isPersistent:false, rememberBrowser:false);
 
-                    // For more information on how to enable account confirmation and password reset please visit http://go.microsoft.com/fwlink/?LinkID=320771
-                    // Send an email with this link
-                    // string code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
-                    // var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
-                    // await UserManager.SendEmailAsync(user.Id, "Confirm your account", "Please confirm your account by clicking <a href=\"" + callbackUrl + "\">here</a>");
+                    await UserManager.AddToRoleAsync(user.Id, "Employee");
+
                     HolidayManagementContext db = new HolidayManagementContext();
                     UserDetails nuser = new UserDetails
-                    { LastName = model.LastName,
+                    {
+                        LastName = model.LastName,
                         FirstName = model.FirstName,
                         UserID = user.Id
-                         };
+                    };
+                    
                     db.UserDetailsModel.Add(nuser);
                     db.SaveChanges();
 

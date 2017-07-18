@@ -22,11 +22,17 @@ namespace HolidayManagement.Repository.Models
 
         public string UserID { get; set; }
 
+        //public string RoleId { get; set; }
+
         [ForeignKey("TeamId")]
         public virtual Team Team { get; set; }
 
         [ForeignKey("UserID")]
         public virtual IdentityUser AspnetUsers  { get; set; }
+
+        //[ForeignKey("RoleId")]
+        //public virtual IdentityRole AspNetUserRole { get; set; }//
+
 
     }
 }
