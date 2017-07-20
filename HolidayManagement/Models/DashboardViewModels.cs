@@ -18,7 +18,7 @@ namespace HolidayManagement.Models
 
     public class CalendarViewModel
     {
-        public List<BankHoliday> HolidayList { get; set; }
+        public List<BankHoliday> BankHolidayList { get; set; }
         public List<Vacation> VacationList { get; set; }
 
     }

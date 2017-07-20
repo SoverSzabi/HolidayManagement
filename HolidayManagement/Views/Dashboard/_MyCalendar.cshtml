@@ -1,62 +1,91 @@
 ﻿
 
-<h2>Calendar</h2>
-@*<table class="table">
-    <thead class="thead-inverse">
-        <tr>
 
-            <th>Description</th>
-            <th>Day</th>
-            <th>Month</th>
-        </tr>
-    </thead>
-    <tbody data-bind="foreach: bankDays">
-        <tr>
-            <td data-bind="text: Description"></td>
-            <td data-bind="text: Day"></td>
-            <td data-bind="text: Month"></td>
-        </tr>
-    </tbody>
+<!-- Button trigger modal -->
+<br>
+<br>
+<button class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModalHorizontal">
+    Add new Holiday
+</button>
+<h2 align="center">Calendar</h2>
 
-</table>
-    <div>
-        <button></button>
-        <div data-bind="foreach: days">
-            <div data-bind="text: Day">
+<!-- Modal -->
+<div class="modal fade" id="myModalHorizontal" tabindex="-1" role="dialog"
+     aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
 
+            <!-- Modal Header -->
+            <div class="modal-header">
+                <button type="button" class="close"
+                        data-dismiss="modal">
+                    <span aria-hidden="true">&times;</span>
+                    <span class="sr-only">Close</span>
+                </button>
+                <h4 class="modal-title" id="myModalLabel"></h4>
             </div>
 
-        </div>
-            <button></button>
+            <!-- Modal Body -->
+            <div class="modal-body">
 
-        </div>*@
+                <form class="form-horizontal" role="form">
+                    <div class="form-group">
+                        <label class="col-md-2 control-label">From date</label>
+                        <div>
+                            <input type="text" class="form-control">
 
-<div class="container">
-    <div class="row">
+                        </div>
 
-        <h4>2017</h4>
-        <div id="no-more-tables">
-            <table class="col-lg-12 table-bordered table-striped table-condensed cf">
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-2 control-label">To date</label>
+                        <div>
+                            <input type="text" class="form-control">
+                        </div>
+                    </div>
+                   
+
+                </form>
+            </div>
+            <!-- Modal Footer -->
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">
+                    Close
+                </button>
                
-                <thead class="cf">
+                <button type="button" class="btn btn-primary">Add</button>
+                
+            </div>
+        </div>
+    </div>
+</div>
+<br>
+
+<div class="container" padding=10px>
+
+        <h2 data-bind="text: year" align="center"></h2>
+        <br>
+        <span><button class="btn btn-primary btn-lg" data-bind="click: prevMonth" style="float: left">Previous</button></span>
+        <span><button class="btn btn-primary btn-lg" data-bind="click: nextMonth" style="float: right">Next</button></span>
+
+        <h3 data-bind="text: monthN" align="center"></h3>
+        <br>
+            <table class="table">
+                    <thead class="thead-inverse" >
                     <tr>        
                         <th>Day</th>
-                        <th>IsFreeDay</th>
+                        <th>Name</th>
                         <th>Description</th>
                     </tr>
                 </thead>
-                <tbody data-bind="foreach: days">       
+                <tbody data-bind="foreach: days">                   
                     <tr>
-                        <td data-bind="text: Day"></td>>
-                        <td data-bind="text: IsFreeDay"></td>
-                        <td data-bind="text: Description"></td>
-                    </tr>
+                        <td data-bind="text: day, style: { color: isFreeDay() ?  'red' : 'black' && bankHoliday() ?  'blue' : ''} "></td>
+                        <td data-bind="text: name"></td>
+                        <td data-bind="text: description, style: { color: isFreeDay() ?  'red' : 'black' && bankHoliday() ?  'blue' : ''}"></td>
 
+                    </tr>
                 </tbody>
             </table>
-        </div>
-    </div>
-    @*<div class="row">
-        <p class="bg-success" style="padding:10px;margin-top:20px"><small><a href="http://elvery.net/demo/responsive-tables/#no-more-tables" target="_blank">Link</a> to original article</small></p>
-    </div>*@
+    
 </div>

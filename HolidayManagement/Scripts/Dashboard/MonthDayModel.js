@@ -1,12 +1,16 @@
 ﻿
 function MonthDayModel(model) {
-    this.IsFreeDay = ko.observable(null);
-    this.Description = ko.observable(null);
-    this.Day = ko.observable(null);
+    this.isFreeDay = ko.observable(null);
+    this.description = ko.observable(null);
+    this.day = ko.observable(null);
+    this.bankHoliday = ko.observable(null);
+    this.name = ko.observable(null);
 
     if (model != null) {
-        this.IsFreeDay(model.IsFreeDay);
-        this.Description(model.Description);
-        this.Day(model.Day);
+        this.isFreeDay(model.isFreeDay);
+        this.description(model.description);
+        this.day(model.day);
+        this.bankHoliday(model.bankHoliday);
+        this.name(model.name);
     }
 }

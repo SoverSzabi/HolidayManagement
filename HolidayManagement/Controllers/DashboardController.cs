@@ -36,7 +36,7 @@ namespace HolidayManagement.Controllers
             BankHolidayRepository bank = new BankHolidayRepository();
 
             CalendarViewModel calendar = new CalendarViewModel();
-            calendar.HolidayList = bank.GetBankHolidays();
+            calendar.BankHolidayList = bank.GetBankHolidays();
             calendar.VacationList = vac.GetVacations();
 
            

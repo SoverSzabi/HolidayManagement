@@ -15,7 +15,6 @@
     @Scripts.Render("~/Scripts/Dashboard/VacationModel.js")
     @Scripts.Render("~/Scripts/Dashboard/MonthDayModel.js")
 
-
 </head>
 <body>
     <div class="navbar navbar-inverse navbar-fixed-top">
@@ -26,11 +25,11 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                @Html.ActionLink("HolidayManagement", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+                @Html.ActionLink("HolidayManagement", "Index", "Dashboard", new { area = "" }, new { @class = "navbar-brand" })
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
-                   <!--Removed: Home, About, Contact-->
+                   
                 </ul>
                 @Html.Partial("_LoginPartial")
             </div>
