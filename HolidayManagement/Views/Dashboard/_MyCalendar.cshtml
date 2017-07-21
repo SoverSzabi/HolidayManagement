@@ -1,16 +1,16 @@
-﻿
+﻿@using Microsoft.AspNet.Identity
 
 
 <!-- Button trigger modal -->
 <br>
 <br>
-<button class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModalHorizontal">
+<button class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModalAddVacation"  data-bind="click: ResetVacationModal" >
     Add new Holiday
 </button>
 <h2 align="center">Calendar</h2>   
 
 <!-- Modal -->
-<div class="modal fade" id="myModalHorizontal" tabindex="-1" role="dialog"
+<div class="modal fade" id="myModalAddVacation" tabindex="-1" role="dialog"
      aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -30,17 +30,48 @@
 
                 <form class="form-horizontal" role="form">
                     <div class="form-group">
+
+                        <label class="col-md-2 control-label">Hello:  </label>
+                        
+                        @if (User.IsInRole("Admin"))
+                        {
+                            <div>
+
+                                <label class="col-md-2 control-label">Choose a User</label>
+                                <select data-bind="options: users,
+                                           optionsText: 'firstName',
+                                           optionsValue:'id',
+                                           optionsCaption: 'Choose...',
+                                           value: vacation.userId">
+
+                                </select>
+                            </div>
+
+                        }
+                        else
+                        {
+                            <div>
+                                <label class="col-md-2 control-label" style="color:red"> @User.Identity.GetUserName()</label>
+                            </div>
+                        }
+                         
+
+                        </div>
+                    
+                     <div class="form-group">
                         <label class="col-md-2 control-label">From date</label>
                         <div>
-                            <input type="text" class="form-control">
-
+                            <input  type="date" class="form-control"  data-bind="value: vacation.startDate">
+                         
                         </div>
 
                     </div>
                     <div class="form-group">
                         <label class="col-md-2 control-label">To date</label>
                         <div>
-                            <input type="text" class="form-control">
+                            <input type="date" class="form-control"  data-bind="value: vacation.endDate">
+                            <p id="bdays" style="color:indianred"></p>
+                            <p id="errors2" style="color:red"></p>
                         </div>
                     </div>
                    
@@ -53,14 +84,33 @@
                     Close
                 </button>
                
-                <button type="button" class="btn btn-primary">Add</button>
+                <button type="button" class="btn btn-primary"  data-bind="click: AddHoliday" >Add</button>
                 
             </div>
         </div>
     </div>
 </div>
 <br>
+@if (User.IsInRole("Admin"))
+{
+    <div>
 
+        <label class="col-md-2 control-label">Choose a User</label>
+            <select data-bind="options: users,
+                                           optionsText: 'firstName',
+                                           optionsValue:'id',
+                                           optionsCaption: 'Choose...',
+                                           value: vacation.userId">
+            </select>
+    </div> 
+
+}
+else
+{
+    <div>
+        <label class="col-md-2 control-label" style="color:red"> @User.Identity.GetUserName()</label>
+    </div>
+}
 <div class="container" padding=10px>
 
         <h2 data-bind="text: year" align="center"></h2>
@@ -76,6 +126,7 @@
                         <th>Day</th>
                         <th>Name</th>
                         <th>Description</th>
+                        <th>Holiday</th>
                     </tr>
                 </thead>
                 <tbody data-bind="foreach: days">                   
@@ -83,7 +134,7 @@
                         <td data-bind="text: day, style: { color: isFreeDay() ?  'red' : 'black' && bankHoliday() ?  'blue' : ''} "></td>
                         <td data-bind="text: name"></td>
                         <td data-bind="text: description, style: { color: isFreeDay() ?  'red' : 'black' && bankHoliday() ?  'blue' : ''}"></td>
-
+                        <td data-bind="text: holiday"></td>
                     </tr>
                 </tbody>
             </table>

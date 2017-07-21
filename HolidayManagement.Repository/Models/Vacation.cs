@@ -17,8 +17,10 @@ namespace HolidayManagement.Repository.Models
 
         public DateTime EndDate { get; set; }
 
-        public DateTime Date { get; set; }
+        public int NrDays { get; set; }
 
+        public DateTime Date { get; set; }
+        
         [ForeignKey("StateId")]
         public virtual VacationState State {get;set;}
     }

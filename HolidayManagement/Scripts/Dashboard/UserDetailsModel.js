@@ -15,7 +15,7 @@ function UserDetailsModel(model) {
         if (model.AspnetUsers!=null)
         {
             this.email(model.AspnetUsers.Email);
-            this.role(new RoleModel(model.AspnetUsers.role));
+            this.role(new RoleModel(model.AspnetUsers.Roles[0]));
         }
     
         this.firstName(model.FirstName);

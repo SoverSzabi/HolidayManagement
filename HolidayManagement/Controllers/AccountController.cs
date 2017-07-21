@@ -105,34 +105,7 @@ namespace HolidayManagement.Controllers
             return Json(res, JsonRequestBehavior.DenyGet);
         }
 
-        //[HttpPost]
-        //public ActionResult CreateVacation(Vacation model)
-        //{
-        //    UserDetails model2 = new UserDetails();
-        //    string message = "ok";
-        //    bool successed = true;
-        //    var user = new ApplicationUser { UserName = model2.AspnetUsers.Email, Email = model2.AspnetUsers.Email };
         
-        //    using (HolidayManagementContext db = new HolidayManagementContext())
-        //        {
-        //            model.UserId = user.Id;
-        //            db.Vacations.Add(model);
-
-        //            try
-        //            {
-        //                db.SaveChanges();
-        //            }
-        //            catch (Exception e)
-        //           {
-        //                successed = false;
-        //                message = "Save Error";
-        //            }
-
-        //        }
-        //    VacationRepository vacationR= new VacationRepository();
-        //    var res = new { Success = successed, EMessage = message, vacationL = vacationR.GetVacations() };
-        //    return Json(res, JsonRequestBehavior.DenyGet);
-        //}
 
         //!CREATE EDIT
 

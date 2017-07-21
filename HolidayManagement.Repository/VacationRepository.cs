@@ -14,7 +14,15 @@ namespace HolidayManagement.Repository
 
         public List<Vacation> GetVacations()
         {
-            return DbContext.Vacations.ToList();
+            var vacations = DbContext.Vacations.ToList();     
+
+            foreach (var v in vacations)
+            {
+                if (v.State != null)
+                    v.State.Vacations = null;
+            }
+
+            return vacations;
         }
     }
 }

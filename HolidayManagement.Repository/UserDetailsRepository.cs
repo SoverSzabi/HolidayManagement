@@ -10,6 +10,10 @@ namespace HolidayManagement.Repository
         {
             return DbContext.UserDetailsModel.FirstOrDefault(x => x.ID == userDetailsId);
         }
+        public UserDetails GetUserDetailsByUserId(string userDetailsUserId)
+        {
+            return DbContext.UserDetailsModel.FirstOrDefault(x => x.UserID == userDetailsUserId);
+        }
 
         public List<UserDetails> GetUsers()
         {
