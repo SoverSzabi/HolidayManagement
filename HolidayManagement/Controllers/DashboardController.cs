@@ -148,13 +148,13 @@ namespace HolidayManagement.Controllers
                         successed = false;
                         message = "Save in  Error" + e.ToString();
                     }
-                }
+            }
                 else
                 {
-                    successed = false;
-                    message = "Selected user has not enough holiday days";
-                    }
-                }
+                successed = false;
+                message = "Selected user has not enough holiday days";
+            }
+        }
             VacationRepository vacationR = new VacationRepository();
             var res = new { Success = successed, EMessage = message, BusinessDaysUntil = businessDaysUntil };
             return Json(res, JsonRequestBehavior.DenyGet);

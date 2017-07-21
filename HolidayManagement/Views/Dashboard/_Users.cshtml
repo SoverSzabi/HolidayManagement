@@ -5,102 +5,96 @@
 <!-- Button trigger modal -->
 <br>
 <br>
-<button class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModalHorizontal" data-bind="click: ResetManageUser">
-    Create new User
-</button>
+@if (User.IsInRole("Admin"))
+{
+    <button class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModalHorizontal" data-bind="click: ResetManageUser">
+        Create new User
+    </button>
 
-<!-- Modal -->
-<div class="modal fade" id="myModalHorizontal" tabindex="-1" role="dialog"
-     aria-labelledby="myModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
+    <!-- Modal -->
+    <div class="modal fade" id="myModalHorizontal" tabindex="-1" role="dialog"
+         aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <!-- Modal Header -->
+                <div class="modal-header">
+                    <button type="button" class="close"
+                            data-dismiss="modal">
+                        <span aria-hidden="true">&times;</span>
+                        <span class="sr-only">Close</span>
+                    </button>
+                    <h4 class="modal-title" id="myModalLabel"></h4>
+                </div>
+                <!-- Modal Body -->
+                <div class="modal-body">
+                    <form class="form-horizontal" role="form">
+                        <div class="form-group">
+                            <label class="col-md-2 control-label">First Name</label>
+                            <div>
+                                <input type="text" class="form-control" data-bind="value: manageUser.firstName">
 
-            <!-- Modal Header -->
-            <div class="modal-header">
-                <button type="button" class="close"
-                        data-dismiss="modal">
-                    <span aria-hidden="true">&times;</span>
-                    <span class="sr-only">Close</span>
-                </button>
-                <h4 class="modal-title" id="myModalLabel">
-                   
-                </h4>
-            </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-2 control-label">Last Name</label>
+                            <div>
+                                <input type="text" class="form-control" data-bind="value: manageUser.lastName">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-2 control-label">Email </label>
+                            <div>
+                                <input type="text" class="form-control" data-bind="value: manageUser.email">
+                                <p id="errors" style="color:indianred"></p>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-2 control-label">Hire Date</label>
+                            <div>
+                                <input type="date" class="form-control" data-bind="value: manageUser.hireDate">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-2 control-label">Maximum count of available days </label>
+                            <div>
+                                <input type="text" class="form-control" data-bind="value: manageUser.maxDays">
+                            </div>
+                        </div>
 
-            <!-- Modal Body -->
-            <div class="modal-body">
-
-                <form class="form-horizontal" role="form">
-                    <div class="form-group">
-                        <label class="col-md-2 control-label">First Name</label>
-                        <div>
-                            <input type="text" class="form-control" data-bind="value: manageUser.firstName">
-                           
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label class="col-md-2 control-label">Last Name</label>
-                        <div>
-                            <input type="text" class="form-control" data-bind="value: manageUser.lastName">
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label class="col-md-2 control-label">Email </label>
-                        <div>
-                            <input type="text" class="form-control"  data-bind="value: manageUser.email">
-                            <p id="errors" style="color:indianred"></p>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label class="col-md-2 control-label">Hire Date</label>
-                        <div>
-                            <input type="date" class="form-control" data-bind="value: manageUser.hireDate">
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label class="col-md-2 control-label">Maximum count of available days </label>
-                        <div>
-                            <input type="text" class="form-control" data-bind="value: manageUser.maxDays">
-                        </div>
-                    </div>
-                   
-                    <div class="form-group">
-                        <label class="col-md-2 control-label">Team</label>
-                        <select data-bind="options: teams,
+                        <div class="form-group">
+                            <label class="col-md-2 control-label">Team</label>
+                            <select data-bind="options: teams,
                                            optionsText: 'description',
                                            optionsCaption: 'Choose...',
-                                           value: manageUser.team">          
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <label class="col-md-2 control-label">Role</label>
-                        <select data-bind="options: roles,
+                                           value: manageUser.team"></select>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-2 control-label">Role</label>
+                            <select data-bind="options: roles,
                                            optionsText: 'name',
                                            optionsCaption: 'Choose...',
-                                           value: manageUser.role">
-                        </select>
-                    </div>
-               
-                </form>
-            </div>
-            <!-- Modal Footer -->
-            <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">
-                    Close
-                </button>
-                @* kell () mert donteshozatal van es a value-et kell lekerni *@
-                <button type="button" class="btn btn-primary" data-bind="click: CreateUser,visible: manageUser.id() == 0">Create</button>
-                <button type="button" class="btn btn-primary" data-bind="click: EditUser,visible: manageUser.id() != 0">Edit</button>
+                                           value: manageUser.role"></select>
+                        </div>
+
+                    </form>
+                </div>
+                <!-- Modal Footer -->
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">
+                        Close
+                    </button>
+                    @* kell () mert donteshozatal van es a value-et kell lekerni *@
+                    <button type="button" class="btn btn-primary" data-bind="click: CreateUser,visible: manageUser.id() == 0">Create</button>
+                    <button type="button" class="btn btn-primary" data-bind="click: EditUser,visible: manageUser.id() != 0">Edit</button>
+                </div>
             </div>
         </div>
     </div>
-  </div>
-<br>
-<!--User list table-->
+    <br>
+    <!--User list table-->
     <table class="table">
         <thead class="thead-inverse">
             <tr>
-
                 <th>First name</th>
                 <th>Last name</th>
                 <th>Email</th>
@@ -111,17 +105,18 @@
                 <th>Edit</th>
             </tr>
         </thead>
-        <tbody data-bind="foreach: users">   @*//a DasboardModel.js-bol veszi a users-t*@   
-             <tr>
+        <tbody data-bind="foreach: users">
+            @*//a DasboardModel.js-bol veszi a users-t*@
+            <tr>
                 <td data-bind="text: firstName"></td>
                 <td data-bind="text: lastName"></td>
                 <td data-bind="text: email"></td>
-               
+
                 <td data-bind="text: hireDate"> </td>
                 <td data-bind="text: maxDays"></td>
                 <td data-bind="text: team().description"></td>
                 <td data-bind="text: role().name"></td>
-                
+
                 <td>
                     <button class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModalHorizontal"
                             data-bind="click: $root.OpenEditUser">
@@ -129,7 +124,15 @@
                         Edit
                     </button>
                 </td>
-
             </tr>
         </tbody>
     </table>
+
+
+}
+else
+{
+    <br>
+    <p>Nu esti Amdmin!</p>
+}
+
